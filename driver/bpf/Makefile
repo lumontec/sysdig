@@ -41,5 +41,5 @@ $(obj)/probe.o: $(src)/probe.c \
 		-fno-jump-tables \
 		-fno-stack-protector \
 		-Wno-tautological-compare \
-		-O2 -emit-llvm -S $< -o $(patsubst %.o,%.ll,$@)
+		-O2 -g -emit-llvm -S $< -o $(patsubst %.o,%.ll,$@)
 	$(LLC) -march=bpf -filetype=obj -o $@ $(patsubst %.o,%.ll,$@)

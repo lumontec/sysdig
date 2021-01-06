@@ -51,16 +51,16 @@ struct timeval {
 #endif
 
 #define FILLER_RAW(x)							\
-static int __bpf_##x(struct filler_data *data);		\
+static __always_inline int __bpf_##x(struct filler_data *data);		\
 									\
 __bpf_section(TP_NAME "filler/" #x)					\
-static int bpf_##x(void *ctx)				\
+static __always_inline int bpf_##x(void *ctx)				\
 
 #define FILLER(x, is_syscall)						\
-static int __bpf_##x(struct filler_data *data);		\
+static __always_inline int __bpf_##x(struct filler_data *data);		\
 									\
 __bpf_section(TP_NAME "filler/" #x)					\
-static int bpf_##x(void *ctx)				\
+static __always_inline int bpf_##x(void *ctx)				\
 {									\
 	struct filler_data data;					\
 	int res;							\
@@ -83,9 +83,7 @@ static int bpf_##x(void *ctx)				\
 	return 0;							\
 }									\
 									\
-static int __bpf_##x(struct filler_data *data)		\
-
-
+static __always_inline int __bpf_##x(struct filler_data *data)		\
 
 FILLER_RAW(terminate_filler)
 {
